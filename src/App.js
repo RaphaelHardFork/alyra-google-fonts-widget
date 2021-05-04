@@ -15,9 +15,6 @@ const App = () => {
     </div>
   )
 }
-/*
-      <WidgetApp />
-      <Footer />
-      */
+
 
 export default App;

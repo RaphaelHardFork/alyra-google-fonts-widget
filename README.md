@@ -41,6 +41,19 @@ Utilisation de `size` dans `FontsCard` :
 <p style={{ fontSize: `${size}px` }}>{text}</p>
 ```
 
+## 04/05/21
+### Utilisation de l'API Google Fonts
+- Comprendre l'objet
+- Utilisation de sort (popularity, ...)
+- mise en place du .envlocal (netify)
+
+### Installation de axios
+`yarn add axios`
+Puis dans le code :  
+```js
+import axios from 'axios'
+```
+
 ## A faire
 - fetch data sur l'API Google Font
 - implémenter les données de l'API au sein de l'App  

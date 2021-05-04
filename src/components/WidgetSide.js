@@ -1,6 +1,8 @@
-const WidgetSide = ({ filter, setFilter, text, setText, size, setSize }) => {
+const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch }) => {
   const handleChangeFilter = (e) => {
-    setFilter(e.target.value)
+    dispatch({ type: "CHANGE_FETCH", payload: e.target.value })
+    setFilter(document.getElementById(e.target.value).textContent)
+    console.log(filter)
   }
 
   const handleChangeText = (e) => {
@@ -14,10 +16,12 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize }) => {
   return <aside className="col-lg-3 mb-4">
     {/*SELECT*/}
     <label className="fw-bold mb-1" htmlFor="font-select">Afficher des polices</label>
-    <select value={filter} onChange={handleChangeFilter} className="form-select mb-4" id="font-select" aria-label="Default select example">
-      <option value="Les plus récentes">Les plus récentes</option>
-      <option value="Les plus populaires">Les plus populaires</option>
-      <option value="Top 10 trending">Top 10 trending</option>
+    <select defaultValue={filter} onChange={handleChangeFilter} className="form-select mb-4" id="font-select" aria-label="Default select example">
+      <option id="date" value="date">Les plus récentes</option>
+      <option id="popularity" value="popularity">Les plus populaires</option>
+      <option id="trending" value="trending">Top 10 trending</option>
+      <option id="style" value="style">Les plus complètes</option>
+      <option id="alpha" value="alpha">Par ordre alphabétique</option>
     </select>
 
     {/*TEXT AREA*/}
