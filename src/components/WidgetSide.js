@@ -33,5 +33,4 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch 
   </aside>
 }
 
-
 export default WidgetSide

@@ -64,6 +64,10 @@ import axios from 'axios'
 
 ### Déclanchement de nouvelles requêtes via la liste déroulante
 
+### Mise en place de la clé dans Netify
+Advanced build settings
+New variable
+
 
 
 

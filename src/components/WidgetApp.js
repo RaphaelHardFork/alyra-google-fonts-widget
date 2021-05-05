@@ -6,7 +6,7 @@ import WidgetSide from './WidgetSide'
 import WidgetMain from './WidgetMain'
 
 // Fonction
-import { dataReducer } from '../reducers'
+import { dataReducer } from '../reducers.js'
 
 const WidgetApp = () => {
   // Variable concernant le rendu
