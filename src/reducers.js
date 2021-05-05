@@ -29,6 +29,6 @@ const dataReducer = (state, action) => {
   }
 }
 
-exports.dataReducer = dataReducer
+export default dataReducer
 
 // "FETCH_INIT" "FETCH_SUCCESS" "FETCH_ERROR" "CHANGE_FETCH"
