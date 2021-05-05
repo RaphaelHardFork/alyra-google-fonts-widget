@@ -41,7 +41,7 @@ const WidgetApp = () => {
 
   return <div className="container min-vh-100 row my-5 mx-auto">
     <WidgetSide dispatch={dispatch} filter={filter} setFilter={setFilter} text={text} setText={setText} size={size} setSize={setSize} />
-    <WidgetMain data={data} filter={filter} text={text} size={size} />
+    <WidgetMain loading={loading} error={error} data={data} filter={filter} text={text} size={size} />
   </div>
 }
 

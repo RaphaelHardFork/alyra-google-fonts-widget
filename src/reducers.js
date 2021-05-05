@@ -4,6 +4,7 @@ const dataReducer = (state, action) => {
       return {
         ...state,
         loading: true,
+        error: false,
       }
     case "FETCH_ERROR":
       return {
@@ -15,6 +16,7 @@ const dataReducer = (state, action) => {
       return {
         ...state,
         loading: false,
+        error: false,
         data: action.payload.data.items.slice(0, 10)
       }
     case "CHANGE_FETCH":

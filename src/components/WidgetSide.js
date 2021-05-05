@@ -2,7 +2,6 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch 
   const handleChangeFilter = (e) => {
     dispatch({ type: "CHANGE_FETCH", payload: e.target.value })
     setFilter(document.getElementById(e.target.value).textContent)
-    console.log(filter)
   }
 
   const handleChangeText = (e) => {

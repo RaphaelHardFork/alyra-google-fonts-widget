@@ -47,12 +47,25 @@ Utilisation de `size` dans `FontsCard` :
 - Utilisation de sort (popularity, ...)
 - mise en place du .envlocal (netify)
 
+### Mise en place de .env.local
+
 ### Installation de axios
 `yarn add axios`
 Puis dans le code :  
 ```js
 import axios from 'axios'
 ```
+
+### Mise en place du useReducer adapté à la récupération 
+
+### Traitement des données 
+
+### Implémentation de la police dans les cards
+
+### Déclanchement de nouvelles requêtes via la liste déroulante
+
+
+
 
 ## A faire
 - fetch data sur l'API Google Font
