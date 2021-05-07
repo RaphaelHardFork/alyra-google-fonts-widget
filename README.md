@@ -166,17 +166,83 @@ Comme dans l'exemple du cours :
 ### Mise en place de la clé dans Netify
 **Advanced build settings** => New variable
 
+--------
+## 07/05/21 - mise en place des favoris
+### Variable *favorite*
+Initialisation de la variable d'état dans `<WidgetApp />`  
+```js
+  const [favorite, setFavorite] = useState([])
+```
+Modification de le l'état dans `<FontsCard />` (bouton cliquable on/off avec une limite de 10 favoris) :
+```js
+  const handleFavButton = (elem) => {
+    if (favorite.includes(elem.family)) {
+      setFavorite(favorite.filter((el) => el !== elem.family))
+    } else {
+      setFavorite([...favorite, elem.family])
+    }
+  }
+```
+### Modification du *dataReducer*
+Notre **disptach** était adapter à une URL avec l'option pour trier nos 10 premiers résultats. Cependant pour récupérer nos favoris on devait appliquer un filtre **sur l'ensemble de l'objet** contenant les polices : 
+```js
+case "FETCH_SUCCESS":
+      let fetchedData = []
+      if (state.url.length < 95) {
+        // remplaçable par un .filter
+        for (let elem of action.payload.data.items) {
+          if (action.favorite.includes(elem.family)) {
+            fetchedData.push(elem)
+          }
+        }
+      } else {
+        fetchedData = action.payload.data.items.slice(0, 10)
+      }
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        data: fetchedData
+      }
+```
+Et donc également changer notre requête http : 
+```js
+case "CHANGE_FETCH":
+      let newUrl = `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.REACT_APP_FONTS_API}&sort=${action.payload}`
+      if (action.payload === "favorite") {
+        newUrl = `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.REACT_APP_FONTS_API}`
+      }
+      return {
+        ...state,
+        url: newUrl
+      }
+```
+### Mise en place du Local Storage
+Un useEffect pour enregistrer les favoris :
+```js
+  useEffect(() => {
+    window.localStorage.setItem("my-favorites", JSON.stringify(favorite))
+  }, [favorite])
+```
+Et l'initialisation de la variable d'état :
+```js
+// la fonction (()=>...) améliore t-elle la performance ? (Lazy initial state)
+  const [favorite, setFavorite] = useState(() => JSON.parse(localStorage.getItem("my-favorites")) || [])
+```
 
-
+## Warning à régler
+```js
+src/components/WidgetApp.js
+  Line 41:6:  React Hook useEffect has a missing dependency: 'favorite'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+```
 
 ## A faire
 - Utiliser les componants dédié aux polices  
 [React Google Font Loader](https://github.com/jakewtaylor/react-google-font-loader)
+- mettre des .filter
+- faire disparaitre les favoris quand on décoche
 
 ## Pour aller plus loin
-- possibilité de mettre des favoris
-  - utilisation du localStorage
-  - besoin du lazy initiale state
 - option pour rechercher une police spécifique
   - besoin de charger toute les données
   - besoin de mettre un cancel (abord fetch)

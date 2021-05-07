@@ -1,6 +1,10 @@
-const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch }) => {
+const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch, favorite }) => {
   const handleChangeFilter = (e) => {
-    dispatch({ type: "CHANGE_FETCH", payload: e.target.value })
+    if (e.target.value !== "favorite") {
+      dispatch({ type: "CHANGE_FETCH", payload: e.target.value })
+    } else {
+      dispatch({ type: "CHANGE_FETCH", payload: e.target.value })   // favorite : []
+    }
     setFilter(document.getElementById(e.target.value).textContent)
   }
 
@@ -16,11 +20,12 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch 
     {/*SELECT*/}
     <label className="fw-bold mb-1" htmlFor="font-select">Afficher des polices</label>
     <select defaultValue={filter} onChange={handleChangeFilter} className="form-select mb-4" id="font-select" aria-label="Default select example">
+      <option id="alpha" value="alpha">Par ordre alphabétique</option>
       <option id="date" value="date">Les plus récentes</option>
       <option id="popularity" value="popularity">Les plus populaires</option>
       <option id="trending" value="trending">Top 10 trending</option>
       <option id="style" value="style">Les plus complètes</option>
-      <option id="alpha" value="alpha">Par ordre alphabétique</option>
+      <option id="favorite" value="favorite">Mes favoris</option>
     </select>
 
     {/*TEXT AREA*/}
