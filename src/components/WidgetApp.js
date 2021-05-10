@@ -42,7 +42,6 @@ const WidgetApp = () => {
       }
     }
     dataFetching()
-
   }, [url])
 
   // save favorite
@@ -51,7 +50,6 @@ const WidgetApp = () => {
     if (filter === 'Mes favoris') {
       dispatch({ type: "CHANGE_FAVORITE", favorite })
     }
-
   }, [favorite])
 
 

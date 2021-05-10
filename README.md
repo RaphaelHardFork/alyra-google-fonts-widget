@@ -1,7 +1,7 @@
 # Projet Alyra Google Fonts Widget
 **Team verte :** Pyrénam, Ton, Diego et Raphael
 
-**Site :** Pas encore déployé  
+**Site :** [NetLify](https://alyra-google-fonts-widget-green-team.netlify.app/)
 ## 03/05/2021
 ### Création de l'App
  `npx create-react-app alyra-google-fonts-widget`
