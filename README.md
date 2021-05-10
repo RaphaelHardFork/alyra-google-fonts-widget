@@ -230,6 +230,54 @@ Et l'initialisation de la variable d'état :
   const [favorite, setFavorite] = useState(() => JSON.parse(localStorage.getItem("my-favorites")) || [])
 ```
 
+## 09/05/21
+### Utilisation des .filter
+Dans `reducers.js` on remplace : 
+```js
+for (let elem of action.payload.data.items) {
+  if (action.favorite.includes(elem.family)) {
+    fetchedData.push(elem)
+     }
+  }
+```
+par :
+```js
+fetchedData = action.payload.data.items.filter((elem) => action.favorite.includes(elem.family))
+```
+
+### Disparition des favoris lors du décochage dans le menu favoris 
+On veux que, dans le menu "Mes favoris", les polices disparaisse lorsque nous les décochons. On utilise le useEffect étant déclanché par `[favorite]` (`<WidgetApp />`) : 
+```js
+if (filter === 'Mes favoris') {
+      dispatch({ type: "CHANGE_FAVORITE", favorite })
+    }
+```
+La fonction est appellée uniquement si on est dans le menu "Mes favoris". Et on ajoute une nouvelle action au **reducer :** 
+```js
+case "CHANGE_FAVORITE":
+      return {
+        ...state,
+        data: state.data.filter((elem) => action.favorite.includes(elem.family))
+      }
+```
+### Focus sur les deux warning lié à useEffect
+*React Hook useEffect has a missing dependency: 'favorite'. Either include it or remove the dependency array  react-hooks/exhaustive-deps*  
+Pour ignorer ce warning on peut ajouter au dessus du tableau de dépendence : 
+```js
+// eslint-disable-next-line
+```
+
+### Ajout d'une fonction recherche 
+La recherche doit se faire sur l'ensemble du tableau de police, il faut donc charger à nouveau le tableau de police.  
+Probleme il faut stocker la le tableau de donnée dans une variable et changer la façon dont est afficher la liste (data splice 10)  
+Du coup charger l'url juste pour l'ordre de Google
+useEffect => nouvelle action reducer  
+Mauvais perfermance ? => problème de chargement  
+boutton recherche => pas besoin de rechercher la data
+attention favoris
+
+
+
 ## Warning à régler
 ```js
 src/components/WidgetApp.js
@@ -239,8 +287,6 @@ src/components/WidgetApp.js
 ## A faire
 - Utiliser les componants dédié aux polices  
 [React Google Font Loader](https://github.com/jakewtaylor/react-google-font-loader)
-- mettre des .filter
-- faire disparaitre les favoris quand on décoche
 
 ## Pour aller plus loin
 - option pour rechercher une police spécifique

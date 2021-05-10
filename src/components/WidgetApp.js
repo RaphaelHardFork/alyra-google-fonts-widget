@@ -20,13 +20,17 @@ const WidgetApp = () => {
   const [state, dispatch] = useReducer(dataReducer, {
     // Etat initial
     data: [],
+    items: [],
     loading: false,
     error: false,
+    isSearch: false,
+    searchFilter: "",
     url: `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.REACT_APP_FONTS_API}&sort=alpha`
   })
   // Extraction des variables du useReducer
-  const { url, data, loading, error } = state
+  const { url, data, loading, error, searchFilter } = state
 
+  // Fetch data
   useEffect(() => {
     const dataFetching = async () => {
       dispatch({ type: "FETCH_INIT" })
@@ -38,14 +42,27 @@ const WidgetApp = () => {
       }
     }
     dataFetching()
+    // eslint-disable-next-line
   }, [url])
 
+  // save favorite
   useEffect(() => {
     window.localStorage.setItem("my-favorites", JSON.stringify(favorite))
+    if (filter === 'Mes favoris') {
+      dispatch({ type: "CHANGE_FAVORITE", favorite })
+    }
+    // eslint-disable-next-line
   }, [favorite])
 
+  /*
+    // recherche items
+    useEffect(() => {
+      dispatch({ type: "CHANGE_FILTER" })
+    }, [searchFilter])
+  */
+
   return <div className="container min-vh-100 row my-5 mx-auto">
-    <WidgetSide favorite={favorite} dispatch={dispatch} filter={filter} setFilter={setFilter} text={text} setText={setText} size={size} setSize={setSize} />
+    <WidgetSide state={state} dispatch={dispatch} filter={filter} setFilter={setFilter} text={text} setText={setText} size={size} setSize={setSize} />
     <WidgetMain favorite={favorite} setFavorite={setFavorite} loading={loading} error={error} data={data} filter={filter} text={text} size={size} />
   </div>
 }

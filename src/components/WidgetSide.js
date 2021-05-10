@@ -1,4 +1,6 @@
-const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch, favorite }) => {
+import SearchBar from './SearchBar'
+
+const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch, state }) => {
   const handleChangeFilter = (e) => {
     if (e.target.value !== "favorite") {
       dispatch({ type: "CHANGE_FETCH", payload: e.target.value })
@@ -14,6 +16,11 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch,
 
   const handleChangeSize = (e) => {
     setSize(e.target.value)
+  }
+
+  const handleDisplaySearch = () => {
+    dispatch({ type: "DISPLAY_SEARCH" })
+    setFilter('Recherche')
   }
 
   return <aside className="col-lg-3 mb-4">
@@ -34,8 +41,17 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch,
 
     {/*SLIDER*/}
     <label htmlFor="range" className="form-label fw-bold mb-3">La taille de police</label>
-    <input defaultValue={size} onChange={handleChangeSize} type="range" className="form-range" id="range" min="8" max="48" step="1" />
-  </aside>
+    <input defaultValue={size} onChange={handleChangeSize} type="range" className="form-range mb-5" id="range" min="8" max="48" step="1" />
+
+    {/*SEARCH*/}
+    {/*//state.isSearch === false ? <button onClick={handleDisplaySearch} className="btn btn-danger">Rechercher une police</button> : <SearchBar state={state} dispatch={dispatch} />*/}
+
+    {/*DEBUG*/}
+    < button onClick={() => console.log(state)} className="btn btn-info">DATA</button>
+    {/* 
+Recherche=false => button
+recherche = true => search bar*/}
+  </aside >
 }
 
 export default WidgetSide
