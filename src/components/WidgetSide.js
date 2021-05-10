@@ -1,12 +1,8 @@
-//import SearchBar from './SearchBar'
+import SearchBar from './SearchBar'
 
 const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch, state }) => {
   const handleChangeFilter = (e) => {
-    if (e.target.value !== "favorite") {
-      dispatch({ type: "CHANGE_FETCH", payload: e.target.value })
-    } else {
-      dispatch({ type: "CHANGE_FETCH", payload: e.target.value })   // favorite : []
-    }
+    dispatch({ type: "CHANGE_FETCH", payload: e.target.value })
     setFilter(document.getElementById(e.target.value).textContent)
   }
 
@@ -18,12 +14,10 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch,
     setSize(e.target.value)
   }
 
-  /*
   const handleDisplaySearch = (e) => {
-    dispatch({ type: "DISPLAY_SEARCH", payload: e.target.value })
+    dispatch({ type: "DISPLAY_SEARCH" })
     setFilter('Recherche')
   }
-  */
 
   return <aside className="col-lg-3 mb-4">
     <div style={{ position: "sticky", top: "5px" }}>
@@ -47,7 +41,7 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch,
       <input defaultValue={size} onChange={handleChangeSize} type="range" className="form-range mb-5" id="range" min="8" max="48" step="1" />
 
       {/*SEARCH*/}
-      {/*state.isSearch === false ? <button onClick={handleDisplaySearch} className="btn btn-danger">Rechercher une police</button > : <SearchBar state={state} dispatch={dispatch} />*/}
+      {state.isSearch === false ? <button onClick={handleDisplaySearch} className="btn btn-danger">Rechercher une police</button > : <SearchBar state={state} dispatch={dispatch} />}
     </div>
   </aside >
 }

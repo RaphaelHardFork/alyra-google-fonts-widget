@@ -1,5 +1,5 @@
 import './App.css'
-import "bootstrap/dist/css/bootstrap.css" // Appelle Bootsrap sur tout les components
+import "bootstrap/dist/css/bootstrap.css" // Importation de bootstrap ici s'applique à tous les components
 
 // Import des components
 import Header from './components/Header'

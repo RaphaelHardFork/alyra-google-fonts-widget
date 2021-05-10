@@ -8,6 +8,7 @@ const FontsCard = ({ text, size, elem, favorite, setFavorite }) => {
       setFavorite([...favorite, elem.family])
     }
   }
+
   return <div className="col-lg-6">
     <div className="card shadow p-3 mb-4">
       <div className="d-flex justify-content-between align-items-center mb-2">

@@ -284,6 +284,12 @@ src/components/WidgetApp.js
   Line 41:6:  React Hook useEffect has a missing dependency: 'favorite'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 ```
 
+## Fait
+- .slice
+- search bar (items)
+- components Search => pas vraiment utile
+- es disabled
+
 ## A faire
 - Utiliser les componants dédié aux polices  
 [React Google Font Loader](https://github.com/jakewtaylor/react-google-font-loader)

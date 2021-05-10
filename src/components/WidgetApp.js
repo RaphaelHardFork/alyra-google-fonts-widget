@@ -19,8 +19,9 @@ const WidgetApp = () => {
 
   // Variable concernant les données
   const [state, dispatch] = useReducer(dataReducer, {
-    // Etat initial
+    // Etat initial du state
     data: [],
+    items: [],
     loading: false,
     error: false,
     isSearch: false,
@@ -28,7 +29,7 @@ const WidgetApp = () => {
     url: `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.REACT_APP_FONTS_API}&sort=alpha`
   })
   // Extraction des variables du useReducer
-  const { url, data, loading, error, searchFilter } = state
+  const { url, data, loading, error } = state
 
   // Fetch data
   useEffect(() => {
@@ -51,13 +52,6 @@ const WidgetApp = () => {
       dispatch({ type: "CHANGE_FAVORITE", favorite })
     }
   }, [favorite])
-
-
-  // recherche items
-  useEffect(() => {
-    dispatch({ type: "DYNAMIC_SEARCH" })
-  }, [searchFilter])
-
 
   return <div className="container min-vh-100 row my-5 mx-auto">
     <WidgetSide state={state} dispatch={dispatch} filter={filter} setFilter={setFilter} text={text} setText={setText} size={size} setSize={setSize} />

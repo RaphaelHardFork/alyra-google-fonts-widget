@@ -23,6 +23,7 @@ const dataReducer = (state, action) => {
         ...state,
         loading: false,
         error: false,
+        items: action.payload.data.items,
         data: fetchedData
       }
     case "CHANGE_FETCH":
@@ -32,6 +33,7 @@ const dataReducer = (state, action) => {
       }
       return {
         ...state,
+        isSearch: false,
         url: newUrl
       }
     case "CHANGE_FAVORITE":
@@ -40,20 +42,21 @@ const dataReducer = (state, action) => {
         data: state.data.filter((elem) => action.favorite.includes(elem.family))
       }
     case "DISPLAY_SEARCH":
+      let newUrl1 = state.url
+      if (state.filter === "Mes favoris") {
+        newUrl1 = `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.REACT_APP_FONTS_API}&sort=alpha`
+      }
       return {
         ...state,
         isSearch: !state.isSearch,
-        url: `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.REACT_APP_FONTS_API}&sort=alpha`
+        url: newUrl1
       }
     case "CHANGE_FILTER":
+      let displayedData = state.items.filter((elem) => elem.family.toLowerCase().includes(action.payload.toLowerCase()))
       return {
         ...state,
-        searchFilter: action.payload
-      }
-    case "DYNAMIC_SEARCH":
-      return {
-        ...state,
-        data: state.data.filter((elem) => state.searchFilter.startsWith(elem.family))    //elem.family.startsWith(state.searchFilter))
+        searchFilter: action.payload,
+        data: displayedData
       }
     default:
       throw new Error(`Il y a eu une erreur dans le dispatch: ${action.type}`)
@@ -61,5 +64,3 @@ const dataReducer = (state, action) => {
 }
 
 export default dataReducer
-
-// "FETCH_INIT" "FETCH_SUCCESS" "FETCH_ERROR" "CHANGE_FETCH"
