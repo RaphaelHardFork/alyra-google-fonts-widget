@@ -266,35 +266,88 @@ Pour ignorer ce warning on peut ajouter au dessus du tableau de dépendence :
 ```js
 // eslint-disable-next-line
 ```
-
-### Ajout d'une fonction recherche 
-La recherche doit se faire sur l'ensemble du tableau de police, il faut donc charger à nouveau le tableau de police.  
-Probleme il faut stocker la le tableau de donnée dans une variable et changer la façon dont est afficher la liste (data splice 10)  
-Du coup charger l'url juste pour l'ordre de Google
-useEffect => nouvelle action reducer  
-Mauvais perfermance ? => problème de chargement  
-boutton recherche => pas besoin de rechercher la data
-attention favoris
-
-
-
-## Warning à régler
+Pour évité de mettre cette ligne de commentaires à chaque fin du useEffect, on peut placer cette ligne au dessus du components `<WidgetApp />` :
 ```js
-src/components/WidgetApp.js
-  Line 41:6:  React Hook useEffect has a missing dependency: 'favorite'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+/* eslint-disable */
 ```
 
-## Fait
-- .slice
-- search bar (items)
-- components Search => pas vraiment utile
-- es disabled
+## 10/05/21
+### Simplification du code pour l'affichage des polices
+L'affichage des *cards polices* se fait avec le **.map** dans `<WidgetMain />` :
+```js
+{data.map((elem) => {
+    return <FontsCard key={elem.family} favorite={favorite} setFavorite={setFavorite} elem={elem} text={text} size={size} />
+      })}
+```
+On ajoute un **.slice(0,10)** pour éviter de traiter *data* en amont et éviter un affichage d'un grand nombre de polices :
+```js
+{data.slice(0, 10).map((elem) => {...}
+)}
+```
+
+### Ajout d'une fonction recherche 
+La recherche doit se faire sur l'ensemble du tableau de police, il faut donc stocker dans un objet l'ensemble du tableau. Ce dernier est appelé **items** et est initié avec un tableau vide (voir `<WidgetApp />`, **ligne 24**).  
+Un bouton de recherche est implémenté dans `<WidgetSide />`, il sert à déclancher le mode recherche (change le bouton en bar de recherche) :  
+```html
+      {state.isSearch === false ? <button onClick={handleDisplaySearch} className="btn btn-danger">Rechercher une police</button > : <SearchBar state={state} dispatch={dispatch} />}
+```
+La fonction associée permet de changer la variable *isSearch* & la variable *filter* :  
+```js
+ const handleDisplaySearch = (e) => {
+    dispatch({ type: "DISPLAY_SEARCH" })
+    setFilter('Recherche')
+  }
+```
+**"DISPLAY_SEARCH" :**  change l'url que si l'on est dans "Mes favoris"
+```js
+    case "DISPLAY_SEARCH":
+      let newUrl1 = state.url
+      if (state.filter === "Mes favoris") {
+        newUrl1 = `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.REACT_APP_FONTS_API}&sort=alpha`
+      }
+      return {
+        ...state,
+        isSearch: !state.isSearch,
+        url: newUrl1
+      }
+```
+**Fonctionnement de la bar de recherche**  
+Elle est définit dans un nouveau components `<SearchBar />` retournant une bar de recherche : 
+```js
+const SearchBar = ({ state, dispatch }) => {
+  const handleChangeSearch = (e) => {
+    dispatch({ type: "CHANGE_FILTER", payload: e.target.value })
+  }
+
+  return (
+    <div className="input-group mb-3">
+      <input onChange={handleChangeSearch} type="text" className="form-control" placeholder="Tapez votre recherche" aria-label="Recipient's username" aria-describedby="button-addon2" />
+    </div>
+  )
+}
+```  
+Et on peut voir que les modifications sur cette bar de recherche active la fonction **dispatch**.  
+**"CHANGE_FILTER" :** le filtrage se fait sur l'objet **items**
+```js
+    case "CHANGE_FILTER":
+      let displayedData = state.items.filter((elem) => elem.family.toLowerCase().includes(action.payload.toLowerCase()))
+      return {
+        ...state,
+        searchFilter: action.payload,
+        data: displayedData
+      }
+```
+Il y a donc une modification de la liste de police à afficher sans passer par un useEffect.
+
+Stocker l'objet contenant toute les polices est une bonne pratique pour la performance ?  
+
+
+
 
 ## A faire
-- Utiliser les componants dédié aux polices  
+- Utiliser les componants dédiés aux polices  
 [React Google Font Loader](https://github.com/jakewtaylor/react-google-font-loader)
 
 ## Pour aller plus loin
-- option pour rechercher une police spécifique
-  - besoin de charger toute les données
+- dans l'option recherche
   - besoin de mettre un cancel (abord fetch)
