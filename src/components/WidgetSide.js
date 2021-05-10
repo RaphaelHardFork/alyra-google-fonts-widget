@@ -18,8 +18,8 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch,
     setSize(e.target.value)
   }
 
-  const handleDisplaySearch = () => {
-    dispatch({ type: "DISPLAY_SEARCH" })
+  const handleDisplaySearch = (e) => {
+    dispatch({ type: "DISPLAY_SEARCH", payload: e.target.value })
     setFilter('Recherche')
   }
 
@@ -44,13 +44,7 @@ const WidgetSide = ({ filter, setFilter, text, setText, size, setSize, dispatch,
     <input defaultValue={size} onChange={handleChangeSize} type="range" className="form-range mb-5" id="range" min="8" max="48" step="1" />
 
     {/*SEARCH*/}
-    {/*//state.isSearch === false ? <button onClick={handleDisplaySearch} className="btn btn-danger">Rechercher une police</button> : <SearchBar state={state} dispatch={dispatch} />*/}
-
-    {/*DEBUG*/}
-    < button onClick={() => console.log(state)} className="btn btn-info">DATA</button>
-    {/* 
-Recherche=false => button
-recherche = true => search bar*/}
+    {state.isSearch === false ? <button onClick={handleDisplaySearch} className="btn btn-danger">Rechercher une police</button > : <SearchBar state={state} dispatch={dispatch} />}
   </aside >
 }
 

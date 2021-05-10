@@ -54,13 +54,12 @@ const WidgetApp = () => {
 
   }, [favorite])
 
-  /*
-    // recherche items
-    useEffect(() => {
-      dispatch({ type: "DYNAMIC_SEARCH" })
-      console.log(data.length)
-    }, [searchFilter])
-  */
+
+  // recherche items
+  useEffect(() => {
+    dispatch({ type: "DYNAMIC_SEARCH" })
+  }, [searchFilter])
+
 
   return <div className="container min-vh-100 row my-5 mx-auto">
     <WidgetSide state={state} dispatch={dispatch} filter={filter} setFilter={setFilter} text={text} setText={setText} size={size} setSize={setSize} />

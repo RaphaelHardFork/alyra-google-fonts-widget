@@ -7,7 +7,7 @@ const WidgetMain = ({ filter, text, size, data, loading, error, favorite, setFav
       {loading && <p className="fs-1">Chargement...</p>}
       {error && <p className="alert alert-danger">Il y a eu une erreur : {error}</p>}
       {filter === "Mes favoris" && favorite.length === 0 && <p className="fs-1">Vous n'avez pas de favoris</p>}
-      {data.map((elem) => {
+      {data.slice(0, 10).map((elem) => {
         return <FontsCard key={elem.family} favorite={favorite} setFavorite={setFavorite} elem={elem} text={text} size={size} />
       })}
     </div>
