@@ -8,6 +8,7 @@ import WidgetMain from './WidgetMain'
 // Fonction
 import dataReducer from '../reducers'
 
+/* eslint-disable */
 const WidgetApp = () => {
   // Variable concernant le rendu
   const [filter, setFilter] = useState("Par ordre alphabétique")
@@ -20,7 +21,6 @@ const WidgetApp = () => {
   const [state, dispatch] = useReducer(dataReducer, {
     // Etat initial
     data: [],
-    items: [],
     loading: false,
     error: false,
     isSearch: false,
@@ -42,7 +42,7 @@ const WidgetApp = () => {
       }
     }
     dataFetching()
-    // eslint-disable-next-line
+
   }, [url])
 
   // save favorite
@@ -51,13 +51,14 @@ const WidgetApp = () => {
     if (filter === 'Mes favoris') {
       dispatch({ type: "CHANGE_FAVORITE", favorite })
     }
-    // eslint-disable-next-line
+
   }, [favorite])
 
   /*
     // recherche items
     useEffect(() => {
-      dispatch({ type: "CHANGE_FILTER" })
+      dispatch({ type: "DYNAMIC_SEARCH" })
+      console.log(data.length)
     }, [searchFilter])
   */
 
